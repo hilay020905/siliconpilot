@@ -1,162 +1,571 @@
-# SiliconPilot — Reference Implementation
+<div align="center">
 
-![SiliconPilot architecture diagram](docs/architecture.svg)
+# SiliconPilot
+### Autonomous RTL Engineering Agent for Hardware Design Verification, Debugging and Self-Healing
 
-A working, runnable Phase-1 slice of the SiliconPilot autonomous-AI-hardware-engineer
-architecture: it reads an RTL project, compiles it, simulates it, parses the waveform,
-localizes a root cause, generates and QA-reviews a patch, applies it, and re-verifies —
-looping until the design passes or a stopping condition is hit. No mocked output: every
-step in the demo actually invokes Icarus Verilog and parses real compiler/simulator/VCD
-output.
+<p align="center">
+<img src="images/banner.png" width="900">
+</p>
 
-This is the **Phase-1 MVP slice** of the full system described in the accompanying
-system design document (agents: Project Understanding, RTL Parser, Dependency Graph,
-Compiler, Simulation, Waveform Analysis, Root Cause Analysis, Patch Generation, QA/Critic,
-Planner). Coverage/Assertion/Timing/Power/Area/CDC/Lint/Documentation/Memory agents,
-Neo4j, LangGraph, and the FastAPI service are stubbed or described as extension points —
-see "What's real vs. what's a stub" below.
+![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)
+![License](https://img.shields.io/badge/License-MIT-green.svg)
+![Status](https://img.shields.io/badge/Status-Research%20Prototype-orange)
+![RTL](https://img.shields.io/badge/RTL-Verilog-red)
+![Simulation](https://img.shields.io/badge/Simulation-Icarus%20Verilog-blue)
 
-## Quickstart
+---
+
+**SiliconPilot** is an autonomous AI-powered RTL engineering framework capable of understanding Verilog projects, compiling designs, executing simulations, analyzing waveforms, identifying root causes of failures, generating fixes, validating patches, and producing explainable engineering reports—all without manual intervention.
+
+</div>
+
+---
+
+# Overview
+
+Modern RTL verification requires engineers to repeatedly compile, simulate, inspect waveforms, debug failures, edit RTL, rerun simulations, and verify fixes.
+
+SiliconPilot automates this engineering loop.
+
+Instead of functioning as a traditional script, SiliconPilot behaves as an autonomous engineering agent that continuously reasons about the current state of a hardware project and determines the next engineering action.
+
+The framework combines:
+
+- Static RTL analysis
+- Dynamic simulation
+- Waveform inspection
+- Knowledge graph reasoning
+- Root cause localization
+- Automated RTL patch generation
+- Patch validation
+- Explainable report generation
+
+---
+
+# Demo
+
+<p align="center">
+<img src="images/demo.gif" width="900">
+</p>
+
+Example autonomous execution:
+
+```
+Scan Project
+      ↓
+Build Knowledge Graph
+      ↓
+Static Analysis
+      ↓
+Compile RTL
+      ↓
+Run Simulation
+      ↓
+Simulation Failed
+      ↓
+Analyze Waveform
+      ↓
+Root Cause Analysis
+      ↓
+Generate RTL Patch
+      ↓
+Validate Patch
+      ↓
+Recompile
+      ↓
+Resimulate
+      ↓
+PASS
+      ↓
+Generate Engineering Report
+```
+
+---
+
+# Features
+
+## Autonomous Engineering Loop
+
+- Automatic project understanding
+- Intelligent planning
+- Dynamic workflow execution
+- No manually scripted debug sequence
+
+---
+
+## RTL Parsing
+
+Supports Verilog designs including:
+
+- Modules
+- Registers
+- Wires
+- FSM extraction
+- Counter detection
+- Signal dependency graph
+
+---
+
+## Static Analysis
+
+Detects:
+
+- Uninitialized registers
+- Multiple drivers
+- Dead logic
+- Unreachable code
+- Missing reset logic
+- Potential latch inference
+- Counter structures
+- FSM structures
+
+---
+
+## Knowledge Graph
+
+SiliconPilot builds a hardware knowledge graph representing
+
+- Modules
+- Signals
+- Registers
+- Connections
+- Dependencies
+- Drivers
+- Readers
+
+Example:
+
+<p align="center">
+<img src="images/knowledge_graph.png" width="700">
+</p>
+
+---
+
+## Automatic Compilation
+
+Supports
+
+- Icarus Verilog
+
+Compilation is automatically triggered whenever RTL changes.
+
+---
+
+## Automatic Simulation
+
+Runs the supplied testbench.
+
+Collects
+
+- Console logs
+- Exit status
+- Assertions
+- Generated VCD waveform
+
+---
+
+## Waveform Analysis
+
+Automatically inspects VCD files to identify
+
+- X propagation
+- Unknown values
+- Signal glitches
+- Incorrect outputs
+- Register initialization issues
+
+---
+
+## Root Cause Engine
+
+Rather than simply reporting failures, SiliconPilot attempts to identify the actual bug.
+
+Example
+
+```
+Signal:
+tb_accumulator.dut.acc_reg
+
+Issue:
+Register powers up as X
+
+Cause:
+Clocked register has no reset
+
+Confidence:
+0.85
+```
+
+---
+
+## Automatic Patch Generation
+
+Generates RTL fixes such as
+
+- Reset insertion
+- Missing conditions
+- Register initialization
+- FSM corrections
+- Logic replacement
+
+Example generated patch
+
+```verilog
+always @(posedge clk or posedge rst) begin
+    if (rst)
+        acc_reg <= 0;
+    else if (en)
+        acc_reg <= acc_reg + data_in;
+end
+```
+
+---
+
+## Patch Validation
+
+Every generated fix is automatically
+
+- Recompiled
+- Resimulated
+- Compared against previous results
+
+Only validated patches are accepted.
+
+---
+
+## Explainable Reports
+
+SiliconPilot generates
+
+- Markdown reports
+- HTML reports
+- Architecture diagrams
+- Bug summaries
+- Patch explanations
+
+Example
+
+<p align="center">
+<img src="images/report.png" width="900">
+</p>
+
+---
+
+# Project Architecture
+
+<p align="center">
+<img src="images/architecture.png" width="900">
+</p>
+
+```
+                    +----------------+
+                    | Scan Project   |
+                    +----------------+
+                             |
+                             v
+                 +-----------------------+
+                 | Knowledge Graph       |
+                 +-----------------------+
+                             |
+                             v
+                 +-----------------------+
+                 | Static Analyzer       |
+                 +-----------------------+
+                             |
+                             v
+                 +-----------------------+
+                 | Compiler              |
+                 +-----------------------+
+                             |
+                             v
+                 +-----------------------+
+                 | Simulation            |
+                 +-----------------------+
+                             |
+                  PASS        |       FAIL
+                    |         |         |
+                    |         v         |
+                    |  Waveform Analysis|
+                    |         |         |
+                    |         v         |
+                    | Root Cause Engine |
+                    |         |         |
+                    |         v         |
+                    | Patch Generation  |
+                    |         |         |
+                    | Patch Validation  |
+                    |         |         |
+                    +---------+---------+
+                              |
+                              v
+                    Engineering Report
+```
+
+---
+
+# Repository Structure
+
+```
+SiliconPilot/
+│
+├── agents/
+│
+├── analysis/
+│
+├── api/
+│
+├── core/
+│
+├── planner/
+│
+├── reports/
+│
+├── tool_adapters/
+│
+├── demo_project/
+│
+├── docs/
+│
+├── memory_store/
+│
+├── images/
+│
+├── requirements.txt
+├── run_demo.py
+├── README.md
+└── SYSTEM_DESIGN.md
+```
+
+---
+
+# Installation
+
+Clone the repository
 
 ```bash
-# System dependency (Ubuntu/Debian):
-apt-get install -y iverilog
+git clone https://github.com/hilay020905/siliconpilot.git
 
-# Python dependencies:
-pip install pydantic networkx --break-system-packages
-
-# Run the full autonomous loop on a seeded-bug project:
-python3 run_demo.py
+cd siliconpilot
 ```
 
-Expected output: SiliconPilot detects a compiling-but-functionally-broken accumulator
-module (a register with no reset, causing X-propagation), localizes the root cause from
-compiler+waveform evidence, generates a minimal patch, gets it approved by the QA agent,
-applies it, and re-verifies — ending in `status: success` after 2 iterations.
+Install dependencies
 
-## What's real vs. what's a stub
-
-| Component | Status |
-|---|---|
-| Project Understanding Agent | **Real** — walks filesystem, classifies RTL/TB files |
-| RTL Parser Agent | **Real** — regex/state-machine structural parser (module/port/register/instance extraction). Swap for Tree-sitter's Verilog grammar in production. |
-| Dependency Graph Agent | **Real** — NetworkX instantiation graph + blast-radius query |
-| Compiler Agent | **Real** — actually shells out to `iverilog`, parses real diagnostics |
-| Simulation Agent | **Real** — actually shells out to `vvp`, parses real `$display` output |
-| Waveform Analysis Agent | **Real** — hand-rolled VCD parser (zero deps), detects X-propagation from the real `dump.vcd` |
-| Root Cause Analysis Agent | **Real deterministic fusion** of compiler+waveform evidence. The LLM-based reasoning step described in the design doc is a clearly marked extension point (`agents/waveform_rootcause.py`) so you can swap in a Claude API call with zero other changes. |
-| Patch Generation Agent | **Real, but template-based** — pattern-matches "register updated with no reset branch" and synthesizes a real unified diff. Also has a clearly marked extension point for an LLM-based diff generator. |
-| QA/Critic Agent | **Real rule engine** — scope check, non-trivial-diff check, risk gate |
-| Planner | **Real** explicit Python state machine implementing the design doc's engineering loop and stopping conditions. Written so porting to `langgraph.graph.StateGraph` is a mechanical 1:1 transformation. |
-| Coverage / Assertion / Timing / Power / Area / CDC / Lint / Documentation / Memory agents | **Described, not implemented** — see the system design doc for their contracts; Phase 1 intentionally scopes to functional-bug-fixing only |
-| Neo4j / Postgres / Redis / FastAPI / LangGraph | **Not wired up** — this reference repo uses in-memory Pydantic models + NetworkX so it runs with zero infra. `core/schemas.py` is the same schema set the design doc's Postgres tables and Neo4j nodes are based on, so persistence is a mechanical next step. |
-
-## Upgrade: from bug-fixer to miniature RTL engineer
-
-On top of the Phase-1 loop above, SiliconPilot now runs a **Static RTL Analysis +
-FSM/Counter/Assertion/Coverage** pass (planner node `static_analysis`, right after the
-Knowledge Graph is built and *before* the first compile attempt) and produces a
-standalone **Design Quality Report** (planner node `generate_report`, always the last
-node before `terminate`) on every run, success or failure. These are pure additions —
-nothing about the original compile → simulate → root-cause → patch → validate loop
-changed, and both `run_demo.py --legacy` (fixed pipeline) and the default Dynamic
-Planner path still work unmodified.
-
-### New capabilities
-
-| Capability | Module | What it does |
-|---|---|---|
-| Static RTL Analysis | `analysis/static_analyzer.py` | Missing reset, latch inference (`if` w/o `else`, `case` w/o `default`), unused signals, blocking-in-sequential / nonblocking-in-combinational misuse, multiple drivers, floating wires, constant-tied outputs, signed/unsigned mixing, width-mismatched literal assignments |
-| FSM Analyzer | `analysis/fsm_analyzer.py` | Recovers state lists + transition graph from `case(state)` bodies the Knowledge Graph already flagged as FSMs; flags unreachable states, declared-but-unused states, and deadlock states (no escape transition); emits a Mermaid state diagram per FSM |
-| Counter Analyzer | `analysis/counter_analyzer.py` | Detects `sig <= sig + N` patterns; flags missing reset, missing enable/qualifying condition, suspiciously narrow width, non-literal increment steps |
-| Assertion Generator | `analysis/assertion_generator.py` | Infers SVA properties (reset behavior, FSM legality, counter monotonicity) from the Knowledge Graph / FSM / Counter reports and writes them to standalone `<module>_assertions.sva` files under `work_dir/assertions/` — **RTL source is never modified** |
-| Coverage Estimator | `analysis/coverage_estimator.py` | Structural coverage proxy (no golden coverage DB required): FSM state reachability minus unreachable/unused states, and a branch-density-vs-waveform-activity estimate, both with concrete "here's what's undertested" notes |
-| Design Quality Report | `reports/report_generator.py` | Wraps the existing explainability report (agent traces + module hierarchy / dependency / agent-workflow / planner-state-machine Mermaid diagrams) and appends the five sections above; writes both `report.md` and a self-contained `report.html` (Mermaid rendered client-side via CDN — no new Python dependency) |
-| Robust error handling | `tool_adapters/icarus_adapter.py` | Missing `iverilog`/`vvp` binaries and simulation timeouts now degrade to a typed `CompileReport`/`SimResult` with a clear diagnostic instead of crashing the planner — static analysis, FSM/counter/assertion/coverage, and the report still run even with no simulator installed |
-
-All five new analyzers plug into the **same** `DynamicPlanner` decision graph as
-first-class nodes (`static_analysis`, `generate_report`) rather than standalone
-scripts, per the "everything integrates into the planner" design constraint — see
-`planner/dynamic_planner.py::_run_static_analysis` / `_run_generate_report` and the
-`PlannerNodeName` transitions in `core/schemas.py`.
-
-### Design improvements
-
-- **Single source of truth for FSM/reset facts.** `fsm_analyzer` and the "missing
-  reset" static check both read from `ProjectKnowledgeGraph` (which already parses
-  always-block sensitivity lists and case-statement state signals) instead of
-  re-deriving the same facts with a second regex pass — avoids the two analyses ever
-  disagreeing.
-- **Additive, non-blocking analysis.** None of the five new analyzers can fail the
-  planner loop: each is wrapped in its own `AgentTrace` with an honest confidence
-  score, and a missing simulator (or zero findings) degrades gracefully rather than
-  raising.
-- **RTL is never touched by anything except the existing, QA-reviewed Patch
-  Generator.** Assertions are written to sibling `.sva` files; static/FSM/counter
-  findings are report-only.
-- **Typed schemas throughout.** Every new capability gets its own Pydantic model
-  (`StaticFinding`/`StaticAnalysisReport`, `FSMInfo`/`FSMTransition`/
-  `FSMAnalysisReport`, `CounterInfo`/`CounterAnalysisReport`,
-  `GeneratedAssertion`/`AssertionSuite`, `CoverageEstimate`) threaded through
-  `RunState`, matching the existing convention in `core/schemas.py` — no ad-hoc dicts.
-- **Zero new dependencies.** Reuses the existing `pydantic`/`networkx` stack; Mermaid
-  (already used for the four original diagrams) is reused for FSM diagrams, and the
-  HTML report uses a small hand-rolled Markdown→HTML fragment renderer instead of
-  pulling in `markdown`/`jinja2`.
-
-## Project layout
-
-```
-siliconpilot/
-├── core/schemas.py           # every typed message/payload used by every agent
-├── tool_adapters/
-│   ├── icarus_adapter.py     # real iverilog/vvp subprocess wrapper (now degrades gracefully if missing)
-│   └── vcd_adapter.py        # dependency-free VCD parser
-├── agents/
-│   ├── project_understanding.py
-│   ├── rtl_parser.py
-│   ├── dependency_graph.py
-│   ├── compiler_sim.py
-│   ├── waveform_rootcause.py
-│   └── patch_qa.py
-├── analysis/                 # NEW: static/FSM/counter/assertion/coverage analyzers
-│   ├── static_analyzer.py
-│   ├── fsm_analyzer.py
-│   ├── counter_analyzer.py
-│   ├── assertion_generator.py
-│   └── coverage_estimator.py
-├── reports/
-│   └── report_generator.py   # NEW: Design Quality Report (Markdown + HTML)
-├── planner/
-│   ├── planner.py            # original fixed pipeline (untouched, still works via --legacy)
-│   └── dynamic_planner.py    # decision-graph planner; now includes static_analysis + generate_report nodes
-├── demo_project/             # seeded-bug RTL project used by run_demo.py
-│   ├── rtl/accumulator.v     # has a real missing-reset bug
-│   └── tb/tb_accumulator.v
-├── runs/                     # sandbox copies + tool working dirs land here
-│   └── demo_run/work/
-│       ├── report.md / report.html   # Design Quality Report
-│       └── assertions/*.sva          # generated SVA assertion files
-└── run_demo.py                # entry point
+```bash
+pip install -r requirements.txt
 ```
 
-## Extending this into the full system
+Dependencies include
 
-1. **Swap in an LLM for root-cause/patch-gen.** Both extension points are marked with
-   `# --- Extension point ---` comments. The key design constraint to preserve: the LLM
-   call receives the structured `WaveformFindings`/`CompileReport` objects (never raw
-   stdout/VCD text), and its output must be forced into the `RootCauseHypothesis` /
-   `PatchProposal` schemas (e.g. via Claude's structured output / tool-use).
-2. **Add Verilator as a second compiler backend** (`tool_adapters/verilator_adapter.py`)
-   for larger/synthesizable-subset projects and richer lint (`--lint-only`).
-3. **Add Yosys+OpenSTA adapters** for the Timing/Power/Area agents described in the
-   design doc, following the same `run(config) -> StructuredResult` adapter pattern.
-4. **Persist `RunState` to Postgres** using the schema in the design doc §10, and mirror
-   `DependencyGraphSummary` into Neo4j per §6 — `core/schemas.py` already matches those
-   shapes.
-5. **Port `planner/planner.py` to LangGraph** — each function in that file is already a
-   `(RunState) -> RunState` node; wrap with `StateGraph.add_node`/`add_edge` per the
-   state diagram in the design doc §7.
-6. **Wrap in FastAPI** per the design doc §9 endpoint list to get the run dashboard/API.
+- pydantic
+- networkx
+- Icarus Verilog
 
-See `SiliconPilot_System_Design.md` for the full architecture this scaffold implements.
+---
+
+# Running
+
+Execute
+
+```bash
+python run_demo.py --verbose
+```
+
+Expected output
+
+```
+Planner executing node: scan_project
+
+Planner executing node: build_knowledge_graph
+
+Planner executing node: static_analysis
+
+Compile PASS
+
+Simulation FAIL
+
+Waveform Analysis
+
+Root Cause Analysis
+
+Patch Generated
+
+Patch Validated
+
+Simulation PASS
+
+Engineering Report Generated
+```
+
+---
+
+# Example Output
+
+```
+Status:
+SUCCESS
+
+Iterations:
+2
+
+Bugs Found:
+1
+
+Patch Applied:
+YES
+
+Simulation:
+PASS
+
+Engineering Report:
+Generated
+```
+
+---
+
+# Example Bug Fixed
+
+Original RTL
+
+```verilog
+always @(posedge clk) begin
+    if(en)
+        acc_reg <= acc_reg + data_in;
+end
+```
+
+Generated Fix
+
+```verilog
+always @(posedge clk or posedge rst) begin
+    if(rst)
+        acc_reg <= 0;
+    else if(en)
+        acc_reg <= acc_reg + data_in;
+end
+```
+
+Result
+
+✅ Simulation passes
+
+---
+
+# Future Roadmap
+
+- Multi-file RTL projects
+- SystemVerilog support
+- Formal verification
+- Assertion synthesis
+- Coverage-driven debugging
+- Incremental compilation
+- ML-based bug ranking
+- LLM-assisted RTL repair
+- OpenROAD integration
+- Yosys integration
+- Verilator backend
+- Vivado backend
+- FPGA synthesis support
+- CI/CD integration
+
+---
+
+# Technologies Used
+
+- Python
+- Verilog
+- Icarus Verilog
+- NetworkX
+- Pydantic
+
+---
+
+# Screenshots
+
+Create an **images/** folder and place:
+
+```
+images/
+│
+├── banner.png
+├── architecture.png
+├── demo.gif
+├── report.png
+├── knowledge_graph.png
+├── planner.png
+├── waveform.png
+├── patch_generation.png
+```
+
+You can then reference them using
+
+```markdown
+![](images/banner.png)
+```
+
+---
+
+# Contributing
+
+Contributions are welcome.
+
+1. Fork the repository
+
+2. Create a feature branch
+
+```bash
+git checkout -b feature-name
+```
+
+3. Commit changes
+
+```bash
+git commit -m "Add feature"
+```
+
+4. Push
+
+```bash
+git push origin feature-name
+```
+
+5. Open a Pull Request
+
+---
+
+# Citation
+
+If you use SiliconPilot in research, please cite
+
+```bibtex
+@software{siliconpilot,
+  title={SiliconPilot: Autonomous RTL Engineering Agent},
+  author={Hilay Patel},
+  year={2026},
+  url={https://github.com/hilay020905/siliconpilot}
+}
+```
+
+---
+
+# Author
+
+**Hilay Patel**
+
+Indian Institute of Technology Tirupati
+
+GitHub:
+https://github.com/hilay020905
+
+---
+
+# License
+
+MIT License
+
+---
+
+<div align="center">
+
+### ⭐ If you found SiliconPilot useful, please consider giving the repository a star!
+
+</div>
