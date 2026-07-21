@@ -366,25 +366,6 @@ Proof
 
 ---
 
-# Future Roadmap
-
-- Multi-file RTL projects
-- SystemVerilog support
-- Formal verification
-- Assertion synthesis
-- Coverage-driven debugging
-- Incremental compilation
-- ML-based bug ranking
-- LLM-assisted RTL repair
-- OpenROAD integration
-- Yosys integration
-- Verilator backend
-- Vivado backend
-- FPGA synthesis support
-- CI/CD integration
-
----
-
 # Technologies Used
 
 - Python
