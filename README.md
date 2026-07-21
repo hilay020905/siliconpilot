@@ -253,50 +253,6 @@ Example
 <img src="images/1.PNG" width="1000">
 </p>
 
-```
-                    +----------------+
-                    | Scan Project   |
-                    +----------------+
-                             |
-                             v
-                 +-----------------------+
-                 | Knowledge Graph       |
-                 +-----------------------+
-                             |
-                             v
-                 +-----------------------+
-                 | Static Analyzer       |
-                 +-----------------------+
-                             |
-                             v
-                 +-----------------------+
-                 | Compiler              |
-                 +-----------------------+
-                             |
-                             v
-                 +-----------------------+
-                 | Simulation            |
-                 +-----------------------+
-                             |
-                  PASS        |       FAIL
-                    |         |         |
-                    |         v         |
-                    |  Waveform Analysis|
-                    |         |         |
-                    |         v         |
-                    | Root Cause Engine |
-                    |         |         |
-                    |         v         |
-                    | Patch Generation  |
-                    |         |         |
-                    | Patch Validation  |
-                    |         |         |
-                    +---------+---------+
-                              |
-                              v
-                    Engineering Report
-```
-
 ---
 
 # Repository Structure
