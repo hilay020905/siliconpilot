@@ -501,50 +501,6 @@ You can then reference them using
 ```markdown
 ![](images/banner.png)
 ```
-
----
-
-# Contributing
-
-Contributions are welcome.
-
-1. Fork the repository
-
-2. Create a feature branch
-
-```bash
-git checkout -b feature-name
-```
-
-3. Commit changes
-
-```bash
-git commit -m "Add feature"
-```
-
-4. Push
-
-```bash
-git push origin feature-name
-```
-
-5. Open a Pull Request
-
----
-
-# Citation
-
-If you use SiliconPilot in research, please cite
-
-```bibtex
-@software{siliconpilot,
-  title={SiliconPilot: Autonomous RTL Engineering Agent},
-  author={Hilay Patel},
-  year={2026},
-  url={https://github.com/hilay020905/siliconpilot}
-}
-```
-
 ---
 
 # Author
@@ -558,14 +514,4 @@ https://github.com/hilay020905
 
 ---
 
-# License
 
-MIT License
-
----
-
-<div align="center">
-
-### ⭐ If you found SiliconPilot useful, please consider giving the repository a star!
-
-</div>
