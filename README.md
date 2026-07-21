@@ -132,7 +132,7 @@ SiliconPilot builds a hardware knowledge graph representing
 Example:
 
 <p align="center">
-<img src="images/3.png" width="700">
+<img src="images/3.png" width="1000">
 </p>
 
 ---
@@ -242,7 +242,7 @@ SiliconPilot generates
 Example
 
 <p align="center">
-<img src="images/2.png" width="900">
+<img src="images/2.png" width="1000">
 </p>
 
 ---
@@ -250,7 +250,7 @@ Example
 # Project Architecture
 
 <p align="center">
-<img src="images/1.png" width="900">
+<img src="images/1.PNG" width="1000">
 </p>
 
 ```
