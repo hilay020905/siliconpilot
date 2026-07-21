@@ -3,8 +3,6 @@
 # SiliconPilot
 ### Autonomous RTL Engineering Agent for Hardware Design Verification, Debugging and Self-Healing
 
-
-
 ![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
 ![Status](https://img.shields.io/badge/Status-Research%20Prototype-orange)
@@ -13,7 +11,9 @@
 
 ---
 
-**SiliconPilot** is an autonomous AI-powered RTL engineering framework capable of understanding Verilog projects, compiling designs, executing simulations, analyzing waveforms, identifying root causes of failures, generating fixes, validating patches, and producing explainable engineering reports, all without manual intervention.
+**SiliconPilot** is an autonomous AI-powered RTL engineering framework capable of understanding Verilog projects, compiling designs, executing simulations, analyzing waveforms, identifying root causes of failures, generating fixes, validating patches, and producing explainable engineering reports—all without manual intervention.
+
+</div>
 
 ---
 
@@ -35,6 +35,46 @@ The framework combines:
 - Automated RTL patch generation
 - Patch validation
 - Explainable report generation
+
+---
+
+# Demo
+
+<p align="center">
+<img src="images/demo.gif" width="900">
+</p>
+
+Example autonomous execution:
+
+```
+Scan Project
+      ↓
+Build Knowledge Graph
+      ↓
+Static Analysis
+      ↓
+Compile RTL
+      ↓
+Run Simulation
+      ↓
+Simulation Failed
+      ↓
+Analyze Waveform
+      ↓
+Root Cause Analysis
+      ↓
+Generate RTL Patch
+      ↓
+Validate Patch
+      ↓
+Recompile
+      ↓
+Resimulate
+      ↓
+PASS
+      ↓
+Generate Engineering Report
+```
 
 ---
 
@@ -444,6 +484,10 @@ Indian Institute of Technology Tirupati
 GitHub:
 https://github.com/hilay020905
 
----
 
 
+<div align="center">
+
+### ⭐ If you found SiliconPilot useful, please consider giving the repository a star!
+
+</div>
