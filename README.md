@@ -11,7 +11,7 @@
 
 ---
 
-**SiliconPilot** is an autonomous AI-powered RTL engineering framework capable of understanding Verilog projects, compiling designs, executing simulations, analyzing waveforms, identifying root causes of failures, generating fixes, validating patches, and producing explainable engineering reports—all without manual intervention.
+**SiliconPilot** is an autonomous AI-powered RTL engineering framework capable of understanding Verilog projects, compiling designs, executing simulations, analyzing waveforms, identifying root causes of failures, generating fixes, validating patches, and producing explainable engineering reports all without manual intervention.
 
 </div>
 
@@ -38,45 +38,7 @@ The framework combines:
 
 ---
 
-# Demo
 
-<p align="center">
-<img src="images/demo.gif" width="900">
-</p>
-
-Example autonomous execution:
-
-```
-Scan Project
-      ↓
-Build Knowledge Graph
-      ↓
-Static Analysis
-      ↓
-Compile RTL
-      ↓
-Run Simulation
-      ↓
-Simulation Failed
-      ↓
-Analyze Waveform
-      ↓
-Root Cause Analysis
-      ↓
-Generate RTL Patch
-      ↓
-Validate Patch
-      ↓
-Recompile
-      ↓
-Resimulate
-      ↓
-PASS
-      ↓
-Generate Engineering Report
-```
-
----
 
 # Features
 
