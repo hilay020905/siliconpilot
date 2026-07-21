@@ -479,30 +479,6 @@ Result
 
 ---
 
-# Screenshots
-
-Create an **images/** folder and place:
-
-```
-images/
-│
-├── banner.png
-├── architecture.png
-├── demo.gif
-├── report.png
-├── knowledge_graph.png
-├── planner.png
-├── waveform.png
-├── patch_generation.png
-```
-
-You can then reference them using
-
-```markdown
-![](images/banner.png)
-```
----
-
 # Author
 
 **Hilay Patel**
