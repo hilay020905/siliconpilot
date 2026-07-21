@@ -3,9 +3,7 @@
 # SiliconPilot
 ### Autonomous RTL Engineering Agent for Hardware Design Verification, Debugging and Self-Healing
 
-<p align="center">
-<img src="images/banner.png" width="900">
-</p>
+
 
 ![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
