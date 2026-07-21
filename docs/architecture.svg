@@ -1,0 +1,253 @@
+<svg viewBox="0 0 1500 1720" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555"/>
+    </marker>
+    <marker id="arrowBlue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#2b6cb0"/>
+    </marker>
+    <marker id="arrowGreen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#2f855a"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1500" height="1720" fill="#fbfbfd"/>
+
+  <text x="750" y="42" text-anchor="middle" font-size="26" font-weight="700" fill="#111">SiliconPilot — Autonomous RTL Engineering Agent</text>
+  <text x="750" y="66" text-anchor="middle" font-size="14" fill="#555">Architecture overview — Dynamic Planner decision graph, agents, and shared state</text>
+
+  <!-- Layer labels -->
+  <text x="30" y="108" font-size="13" font-weight="700" fill="#888">INPUT</text>
+  <text x="30" y="330" font-size="13" font-weight="700" fill="#888">UNDERSTANDING</text>
+  <text x="30" y="560" font-size="13" font-weight="700" fill="#888">STATIC ANALYSIS (new)</text>
+  <text x="30" y="1000" font-size="13" font-weight="700" fill="#888">COMPILE / SIM / DEBUG LOOP</text>
+  <text x="30" y="1440" font-size="13" font-weight="700" fill="#888">PATCH LOOP</text>
+  <text x="30" y="1620" font-size="13" font-weight="700" fill="#888">OUTPUT</text>
+
+  <!-- INPUT -->
+  <rect x="600" y="90" width="300" height="50" rx="8" fill="#fff" stroke="#999" stroke-width="1.5"/>
+  <text x="750" y="120" text-anchor="middle" font-size="14" font-weight="600">RTL Project (multi-file .v/.sv)</text>
+
+  <line x1="750" y1="140" x2="750" y2="175" stroke="#555" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Dynamic Planner spine box -->
+  <rect x="1080" y="90" width="380" height="1500" rx="10" fill="#f3f0fb" stroke="#8b5cf6" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="1270" y="115" text-anchor="middle" font-size="14" font-weight="700" fill="#6b21a8">DynamicPlanner (decision graph)</text>
+  <text x="1270" y="132" text-anchor="middle" font-size="11" fill="#6b21a8">planner/dynamic_planner.py</text>
+
+  <!-- Planner node list -->
+  <g font-size="12" fill="#4c1d95">
+    <text x="1105" y="160">1. scan_project</text>
+    <text x="1105" y="180">2. build_knowledge_graph</text>
+    <text x="1105" y="200">3. static_analysis (new)</text>
+    <text x="1105" y="220">4. compile</text>
+    <text x="1105" y="240">5. simulate</text>
+    <text x="1105" y="260">6. analyze_waveform</text>
+    <text x="1105" y="280">7. root_cause_analysis</text>
+    <text x="1105" y="300">8. generate_patch</text>
+    <text x="1105" y="320">9. validate_patch / rollback</text>
+    <text x="1105" y="340">10. generate_report (new)</text>
+    <text x="1105" y="360">11. terminate</text>
+  </g>
+  <rect x="1095" y="145" width="345" height="230" rx="6" fill="none" stroke="#c4b5fd" stroke-width="1"/>
+
+  <text x="1270" y="410" text-anchor="middle" font-size="12" fill="#6b21a8" font-style="italic">at every step: inspect RunState +</text>
+  <text x="1270" y="426" text-anchor="middle" font-size="12" fill="#6b21a8" font-style="italic">KnowledgeGraph + EngineeringMemory,</text>
+  <text x="1270" y="442" text-anchor="middle" font-size="12" fill="#6b21a8" font-style="italic">decide next node, record PlannerDecision</text>
+
+  <rect x="1105" y="466" width="330" height="70" rx="6" fill="#fff" stroke="#8b5cf6"/>
+  <text x="1270" y="488" text-anchor="middle" font-size="12" font-weight="600" fill="#4c1d95">core/schemas.py :: RunState</text>
+  <text x="1270" y="506" text-anchor="middle" font-size="10.5" fill="#555">manifest · modules · kg_summary · bugs</text>
+  <text x="1270" y="521" text-anchor="middle" font-size="10.5" fill="#555">patches · reports · agent_traces</text>
+
+  <rect x="1105" y="1000" width="330" height="80" rx="6" fill="#fff" stroke="#8b5cf6"/>
+  <text x="1270" y="1024" text-anchor="middle" font-size="12" font-weight="600" fill="#4c1d95">core/memory.py</text>
+  <text x="1270" y="1042" text-anchor="middle" font-size="10.5" fill="#555">EngineeringMemory — JSONL episodic log</text>
+  <text x="1270" y="1058" text-anchor="middle" font-size="10.5" fill="#555">consulted for prior fixes / decisions</text>
+
+  <rect x="1105" y="1400" width="330" height="80" rx="6" fill="#fff" stroke="#8b5cf6"/>
+  <text x="1270" y="1424" text-anchor="middle" font-size="12" font-weight="600" fill="#4c1d95">core/explainability.py</text>
+  <text x="1270" y="1442" text-anchor="middle" font-size="10.5" fill="#555">AgentTrace per step: observation,</text>
+  <text x="1270" y="1458" text-anchor="middle" font-size="10.5" fill="#555">reasoning, evidence, confidence</text>
+
+  <!-- Understanding stage -->
+  <rect x="140" y="175" width="220" height="60" rx="8" fill="#e6f0ff" stroke="#2b6cb0" stroke-width="1.5"/>
+  <text x="250" y="200" text-anchor="middle" font-size="13" font-weight="600">Project Understanding</text>
+  <text x="250" y="217" text-anchor="middle" font-size="10.5" fill="#333">agents/project_understanding.py</text>
+
+  <rect x="400" y="175" width="220" height="60" rx="8" fill="#e6f0ff" stroke="#2b6cb0" stroke-width="1.5"/>
+  <text x="510" y="200" text-anchor="middle" font-size="13" font-weight="600">RTL Parser</text>
+  <text x="510" y="217" text-anchor="middle" font-size="10.5" fill="#333">agents/rtl_parser.py</text>
+
+  <rect x="660" y="175" width="220" height="60" rx="8" fill="#e6f0ff" stroke="#2b6cb0" stroke-width="1.5"/>
+  <text x="770" y="200" text-anchor="middle" font-size="13" font-weight="600">Dependency Graph</text>
+  <text x="770" y="217" text-anchor="middle" font-size="10.5" fill="#333">agents/dependency_graph.py</text>
+
+  <line x1="360" y1="205" x2="395" y2="205" stroke="#2b6cb0" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+  <line x1="620" y1="205" x2="655" y2="205" stroke="#2b6cb0" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+
+  <line x1="250" y1="235" x2="250" y2="265" stroke="#2b6cb0" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+
+  <rect x="140" y="265" width="740" height="70" rx="8" fill="#dbeafe" stroke="#2b6cb0" stroke-width="2"/>
+  <text x="510" y="291" text-anchor="middle" font-size="14" font-weight="700" fill="#1e3a8a">Project Knowledge Graph  (core/knowledge_graph.py)</text>
+  <text x="510" y="310" text-anchor="middle" font-size="11" fill="#1e3a8a">NetworkX MultiDiGraph — Module · Signal · Register · Wire · FSM · ClockDomain ·</text>
+  <text x="510" y="325" text-anchor="middle" font-size="11" fill="#1e3a8a">AlwaysBlock nodes; contains / drives / reads / writes / instantiates / clocked_by / reset_by edges</text>
+
+  <line x1="770" y1="235" x2="770" y2="265" stroke="#2b6cb0" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+  <line x1="510" y1="335" x2="510" y2="365" stroke="#555" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Static analysis stage (new) -->
+  <rect x="120" y="365" width="940" height="180" rx="10" fill="#ecfdf5" stroke="#2f855a" stroke-width="2"/>
+  <text x="590" y="390" text-anchor="middle" font-size="14" font-weight="700" fill="#065f46">Static Analysis Stage — NEW  (analysis/ package)</text>
+
+  <rect x="140" y="405" width="170" height="120" rx="8" fill="#fff" stroke="#2f855a"/>
+  <text x="225" y="428" text-anchor="middle" font-size="12" font-weight="600">Static Analyzer</text>
+  <text x="225" y="446" text-anchor="middle" font-size="9.5" fill="#333">missing reset</text>
+  <text x="225" y="460" text-anchor="middle" font-size="9.5" fill="#333">latch inference</text>
+  <text x="225" y="474" text-anchor="middle" font-size="9.5" fill="#333">multi-driver / floating</text>
+  <text x="225" y="488" text-anchor="middle" font-size="9.5" fill="#333">blocking/nonblocking</text>
+  <text x="225" y="502" text-anchor="middle" font-size="9.5" fill="#333">width / sign mismatch</text>
+
+  <rect x="330" y="405" width="170" height="120" rx="8" fill="#fff" stroke="#2f855a"/>
+  <text x="415" y="428" text-anchor="middle" font-size="12" font-weight="600">FSM Analyzer</text>
+  <text x="415" y="446" text-anchor="middle" font-size="9.5" fill="#333">state/transition graph</text>
+  <text x="415" y="460" text-anchor="middle" font-size="9.5" fill="#333">unreachable states</text>
+  <text x="415" y="474" text-anchor="middle" font-size="9.5" fill="#333">unused states</text>
+  <text x="415" y="488" text-anchor="middle" font-size="9.5" fill="#333">deadlock detection</text>
+  <text x="415" y="502" text-anchor="middle" font-size="9.5" fill="#333">encoding guess</text>
+
+  <rect x="520" y="405" width="170" height="120" rx="8" fill="#fff" stroke="#2f855a"/>
+  <text x="605" y="428" text-anchor="middle" font-size="12" font-weight="600">Counter Analyzer</text>
+  <text x="605" y="446" text-anchor="middle" font-size="9.5" fill="#333">sig &lt;= sig + N pattern</text>
+  <text x="605" y="460" text-anchor="middle" font-size="9.5" fill="#333">missing reset</text>
+  <text x="605" y="474" text-anchor="middle" font-size="9.5" fill="#333">missing enable</text>
+  <text x="605" y="488" text-anchor="middle" font-size="9.5" fill="#333">narrow width</text>
+
+  <rect x="710" y="405" width="330" height="120" rx="8" fill="#fff" stroke="#2f855a"/>
+  <text x="875" y="428" text-anchor="middle" font-size="12" font-weight="600">Assertion Generator + Coverage Estimator</text>
+  <text x="875" y="448" text-anchor="middle" font-size="9.5" fill="#333">infers SVA (reset / FSM legality / counter</text>
+  <text x="875" y="462" text-anchor="middle" font-size="9.5" fill="#333">monotonicity) → writes standalone .sva files</text>
+  <text x="875" y="480" text-anchor="middle" font-size="9.5" fill="#333">structural FSM-state + branch-density coverage</text>
+  <text x="875" y="494" text-anchor="middle" font-size="9.5" fill="#333">proxy — no golden coverage DB required</text>
+  <text x="875" y="512" text-anchor="middle" font-size="9.5" fill="#7c2d12" font-weight="600">RTL source is never modified by this stage</text>
+
+  <line x1="590" y1="545" x2="590" y2="575" stroke="#555" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Compile/sim/debug loop -->
+  <rect x="120" y="575" width="940" height="420" rx="10" fill="#fff7ed" stroke="#c2410c" stroke-width="2"/>
+  <text x="590" y="600" text-anchor="middle" font-size="14" font-weight="700" fill="#9a3412">Compile / Simulate / Root-Cause Loop</text>
+
+  <rect x="160" y="620" width="220" height="60" rx="8" fill="#fff" stroke="#c2410c"/>
+  <text x="270" y="645" text-anchor="middle" font-size="13" font-weight="600">Compiler Agent</text>
+  <text x="270" y="662" text-anchor="middle" font-size="10" fill="#333">iverilog via tool_adapters/</text>
+
+  <rect x="620" y="620" width="220" height="60" rx="8" fill="#fff" stroke="#c2410c"/>
+  <text x="730" y="645" text-anchor="middle" font-size="13" font-weight="600">Simulation Agent</text>
+  <text x="730" y="662" text-anchor="middle" font-size="10" fill="#333">vvp → CHECK PASS/FAIL + VCD</text>
+
+  <line x1="380" y1="650" x2="615" y2="650" stroke="#c2410c" stroke-width="1.5" marker-end="url(#arrowGreen)"/>
+  <text x="497" y="642" text-anchor="middle" font-size="10" fill="#c2410c">pass</text>
+
+  <rect x="620" y="710" width="220" height="60" rx="8" fill="#fff" stroke="#c2410c"/>
+  <text x="730" y="735" text-anchor="middle" font-size="13" font-weight="600">Waveform Analysis</text>
+  <text x="730" y="752" text-anchor="middle" font-size="10" fill="#333">VCD parser → X/Z anomalies</text>
+
+  <line x1="730" y1="680" x2="730" y2="705" stroke="#c2410c" stroke-width="1.5" marker-end="url(#arrowGreen)"/>
+  <text x="770" y="698" text-anchor="middle" font-size="10" fill="#c2410c">fail + VCD</text>
+
+  <rect x="160" y="710" width="220" height="60" rx="8" fill="#fff" stroke="#c2410c"/>
+  <text x="270" y="735" text-anchor="middle" font-size="13" font-weight="600">Root Cause Engine</text>
+  <text x="270" y="752" text-anchor="middle" font-size="10" fill="#333">evidence fusion → ranked hypotheses</text>
+
+  <line x1="620" y1="740" x2="385" y2="740" stroke="#c2410c" stroke-width="1.5" marker-end="url(#arrowGreen)"/>
+  <line x1="270" y1="620" x2="270" y2="680" stroke="#c2410c" stroke-width="1.5" marker-end="url(#arrowGreen)"/>
+  <text x="180" y="672" text-anchor="middle" font-size="10" fill="#c2410c">compile fail</text>
+
+  <rect x="380" y="820" width="420" height="150" rx="8" fill="#fff" stroke="#c2410c"/>
+  <text x="590" y="845" text-anchor="middle" font-size="13" font-weight="600">RootCauseReport (evidence-ranked)</text>
+  <text x="590" y="866" text-anchor="middle" font-size="10.5" fill="#333">Evidence sources: compiler_log · simulation_log ·</text>
+  <text x="590" y="882" text-anchor="middle" font-size="10.5" fill="#333">waveform · knowledge_graph · previous_failure (Memory)</text>
+  <text x="590" y="903" text-anchor="middle" font-size="10.5" fill="#333">Primary hypothesis + ranked alternative_hypotheses,</text>
+  <text x="590" y="919" text-anchor="middle" font-size="10.5" fill="#333">each with confidence + implicated file/line</text>
+  <text x="590" y="945" text-anchor="middle" font-size="10.5" fill="#7c2d12" font-weight="600">→ opens a Bug in RunState.bugs</text>
+
+  <line x1="270" y1="770" x2="270" y2="895" stroke="#c2410c" stroke-width="1.5"/>
+  <line x1="270" y1="895" x2="375" y2="895" stroke="#c2410c" stroke-width="1.5" marker-end="url(#arrowGreen)"/>
+
+  <line x1="590" y1="970" x2="590" y2="995" stroke="#555" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Patch loop -->
+  <rect x="120" y="995" width="940" height="400" rx="10" fill="#fdf2f8" stroke="#be185d" stroke-width="2"/>
+  <text x="590" y="1020" text-anchor="middle" font-size="14" font-weight="700" fill="#9d174d">Patch Generation / QA / Validation Loop</text>
+
+  <rect x="160" y="1040" width="220" height="70" rx="8" fill="#fff" stroke="#be185d"/>
+  <text x="270" y="1065" text-anchor="middle" font-size="13" font-weight="600">Patch Generator</text>
+  <text x="270" y="1082" text-anchor="middle" font-size="10" fill="#333">graph-constrained repair templates</text>
+  <text x="270" y="1096" text-anchor="middle" font-size="10" fill="#333">consults Engineering Memory</text>
+
+  <rect x="440" y="1040" width="220" height="70" rx="8" fill="#fff" stroke="#be185d"/>
+  <text x="550" y="1065" text-anchor="middle" font-size="13" font-weight="600">QA / Critic Agent</text>
+  <text x="550" y="1082" text-anchor="middle" font-size="10" fill="#333">scope, diff-size, risk gate</text>
+  <text x="550" y="1096" text-anchor="middle" font-size="10" fill="#333">approve / reject verdict</text>
+
+  <rect x="720" y="1040" width="220" height="70" rx="8" fill="#fff" stroke="#be185d"/>
+  <text x="830" y="1065" text-anchor="middle" font-size="13" font-weight="600">Patch Validation</text>
+  <text x="830" y="1082" text-anchor="middle" font-size="10" fill="#333">recompile + resimulate in isolation</text>
+  <text x="830" y="1096" text-anchor="middle" font-size="10" fill="#333">compare vs baseline</text>
+
+  <line x1="380" y1="1075" x2="435" y2="1075" stroke="#be185d" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="660" y1="1075" x2="715" y2="1075" stroke="#be185d" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="300" y="1160" width="580" height="80" rx="8" fill="#fff" stroke="#be185d"/>
+  <text x="590" y="1185" text-anchor="middle" font-size="12.5" font-weight="600">ValidationResult: improved → accept as new baseline</text>
+  <text x="590" y="1205" text-anchor="middle" font-size="12.5" font-weight="600">regressed / no improvement → automatic rollback</text>
+  <text x="590" y="1225" text-anchor="middle" font-size="10.5" fill="#7c2d12">outcome recorded to Engineering Memory either way</text>
+
+  <line x1="830" y1="1110" x2="830" y2="1145" stroke="#be185d" stroke-width="1.5"/>
+  <line x1="830" y1="1145" x2="595" y2="1145" stroke="#be185d" stroke-width="1.5" marker-end="url(#arrowGreen)"/>
+
+  <text x="590" y="1270" text-anchor="middle" font-size="11" fill="#9d174d" font-style="italic">loop back to Compile / Simulate — repeats until success, escalation, or max_iterations</text>
+  <path d="M 940 1075 C 1050 1075 1050 700 940 650" fill="none" stroke="#be185d" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#arrow)"/>
+  <text x="1000" y="870" font-size="10" fill="#9d174d" transform="rotate(90 1000 870)">re-verify</text>
+
+  <line x1="590" y1="1395" x2="590" y2="1420" stroke="#555" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Output -->
+  <rect x="120" y="1420" width="940" height="240" rx="10" fill="#f0f9ff" stroke="#0369a1" stroke-width="2"/>
+  <text x="590" y="1446" text-anchor="middle" font-size="14" font-weight="700" fill="#075985">Output — Design Quality Report (new)  reports/report_generator.py</text>
+
+  <rect x="150" y="1465" width="260" height="150" rx="8" fill="#fff" stroke="#0369a1"/>
+  <text x="280" y="1488" text-anchor="middle" font-size="12" font-weight="600">report.md</text>
+  <text x="280" y="1508" text-anchor="middle" font-size="9.5" fill="#333">Agent reasoning trace</text>
+  <text x="280" y="1522" text-anchor="middle" font-size="9.5" fill="#333">Root cause + validation results</text>
+  <text x="280" y="1536" text-anchor="middle" font-size="9.5" fill="#333">4 Mermaid architecture diagrams</text>
+  <text x="280" y="1550" text-anchor="middle" font-size="9.5" fill="#333">Static analysis findings</text>
+  <text x="280" y="1564" text-anchor="middle" font-size="9.5" fill="#333">FSM diagrams, counters, coverage</text>
+
+  <rect x="430" y="1465" width="260" height="150" rx="8" fill="#fff" stroke="#0369a1"/>
+  <text x="560" y="1488" text-anchor="middle" font-size="12" font-weight="600">report.html</text>
+  <text x="560" y="1508" text-anchor="middle" font-size="9.5" fill="#333">Same content, self-contained</text>
+  <text x="560" y="1522" text-anchor="middle" font-size="9.5" fill="#333">Mermaid rendered client-side</text>
+  <text x="560" y="1536" text-anchor="middle" font-size="9.5" fill="#333">via CDN script tag</text>
+  <text x="560" y="1554" text-anchor="middle" font-size="9.5" fill="#333">no new Python dependency</text>
+
+  <rect x="710" y="1465" width="320" height="150" rx="8" fill="#fff" stroke="#0369a1"/>
+  <text x="870" y="1488" text-anchor="middle" font-size="12" font-weight="600">assertions/*.sva</text>
+  <text x="870" y="1508" text-anchor="middle" font-size="9.5" fill="#333">Auto-generated SystemVerilog</text>
+  <text x="870" y="1522" text-anchor="middle" font-size="9.5" fill="#333">assertions, one file per module</text>
+  <text x="870" y="1540" text-anchor="middle" font-size="9.5" fill="#7c2d12" font-weight="600">Sits beside RTL — never merged into it</text>
+
+  <!-- Legend -->
+  <rect x="30" y="1690" width="14" height="14" fill="#e6f0ff" stroke="#2b6cb0"/>
+  <text x="50" y="1701" font-size="11" fill="#333">Understanding</text>
+  <rect x="170" y="1690" width="14" height="14" fill="#ecfdf5" stroke="#2f855a"/>
+  <text x="190" y="1701" font-size="11" fill="#333">Static analysis (new)</text>
+  <rect x="345" y="1690" width="14" height="14" fill="#fff7ed" stroke="#c2410c"/>
+  <text x="365" y="1701" font-size="11" fill="#333">Compile/Sim/Debug</text>
+  <rect x="510" y="1690" width="14" height="14" fill="#fdf2f8" stroke="#be185d"/>
+  <text x="530" y="1701" font-size="11" fill="#333">Patch loop</text>
+  <rect x="620" y="1690" width="14" height="14" fill="#f0f9ff" stroke="#0369a1"/>
+  <text x="640" y="1701" font-size="11" fill="#333">Output</text>
+  <rect x="710" y="1690" width="14" height="14" fill="#f3f0fb" stroke="#8b5cf6"/>
+  <text x="730" y="1701" font-size="11" fill="#333">Planner + shared state</text>
+</svg>
