@@ -358,9 +358,11 @@ always @(posedge clk or posedge rst) begin
 end
 ```
 
-Result
+Proof
 
-✅ Simulation passes
+<p align="center">
+<img src="images/4.png" width="1000">
+</p>
 
 ---
 
