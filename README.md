@@ -443,7 +443,4 @@ https://github.com/hilay020905
 
 
 <div align="center">
-
-### ⭐ If you found SiliconPilot useful, please consider giving the repository a star!
-
 </div>
